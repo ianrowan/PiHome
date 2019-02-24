@@ -13,8 +13,8 @@ def roku_sequence(app):
                  'amazon prime': ['right', 'right']}
     for i in sequences[app.lower()]:
         print("irsend SEND_ONCE roku KEY_{}".format(i.upper()))
-        subprocess.call(['irsend', 'SEND_ONCE', 'tv', 'KEY_{}'.format(i.upper())])
-        time.sleep(0.5)
+        subprocess.call(['irsend', 'SEND_ONCE', 'roku', 'KEY_{}'.format(i.upper())])
+        time.sleep(0.3)
     subprocess.call(['irsend', 'SEND_ONCE', 'roku', 'KEY_ENTER'])
 
 
@@ -32,7 +32,7 @@ def control_volume(direction, delta):
     for i in range(int(delta)):
         print("irsend SEND_ONCE tv KEY_VOLUME{}".format(direction.upper()))
         subprocess.call(['irsend', 'SEND_ONCE', 'tv', 'KEY_VOLUME{}'.format(direction.upper())])
-        time.sleep(0.5)
+        time.sleep(0.75)
     return statement("Volume has been turned {} {}".format(direction, delta))
 
 @ask.intent('Roku')
@@ -40,6 +40,7 @@ def control_roku(app):
     # first, go to home
     print("irsend SEND_ONCE roku KEY_HOME")
     subprocess.call(['irsend', 'SEND_ONCE', 'roku', 'KEY_HOME'])
+    time.sleep(.5)
     # call function which takes input of sequence
     roku_sequence(app)
     return statement("Opening" + app)
