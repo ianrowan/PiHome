@@ -1,0 +1,131 @@
+{
+    "interactionModel": {
+        "languageModel": {
+            "invocationName": "pi",
+            "intents": [
+                {
+                    "name": "AMAZON.FallbackIntent",
+                    "samples": []
+                },
+                {
+                    "name": "AMAZON.CancelIntent",
+                    "samples": []
+                },
+                {
+                    "name": "AMAZON.HelpIntent",
+                    "samples": []
+                },
+                {
+                    "name": "AMAZON.StopIntent",
+                    "samples": []
+                },
+                {
+                    "name": "AMAZON.NavigateHomeIntent",
+                    "samples": []
+                },
+                {
+                    "name": "TvControl",
+                    "slots": [
+                        {
+                            "name": "io",
+                            "type": "onOff"
+                        }
+                    ],
+                    "samples": [
+                        "turn the t.v. {io}",
+                        "TV {io}",
+                        "Turn {io} the t.v"
+                    ]
+                },
+                {
+                    "name": "VolumeControl",
+                    "slots": [
+                        {
+                            "name": "direction",
+                            "type": "AMAZON.RelativePosition"
+                        },
+                        {
+                            "name": "delta",
+                            "type": "AMAZON.NUMBER"
+                        }
+                    ],
+                    "samples": [
+                        "Turn the volume {direction} {delta}"
+                    ]
+                },
+                {
+                    "name": "Roku",
+                    "slots": [
+                        {
+                            "name": "app",
+                            "type": "Roku"
+                        }
+                    ],
+                    "samples": [
+                        "{app}",
+                        "Play {app}",
+                        "Watch {app}",
+                        "Open {app}"
+                    ]
+                },
+                {
+                    "name": "Fireplace",
+                    "slots": [],
+                    "samples": [
+                        "start the fireplace",
+                        "turn on the fireplace",
+                        "turn on the fire",
+                        "Start a fire"
+                    ]
+                }
+            ],
+            "types": [
+                {
+                    "name": "onOff",
+                    "values": [
+                        {
+                            "name": {
+                                "value": "Off"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "On"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "name": "Roku",
+                    "values": [
+                        {
+                            "name": {
+                                "value": "c.n.b.c"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "showtime"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "cnbc"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "amazon prime"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "netflix"
+                            }
+                        }
+                    ]
+                }
+            ]
+        }
+    }
+}
