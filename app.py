@@ -2,6 +2,7 @@ from flask import Flask
 from flask_ask import Ask, statement, question
 import subprocess
 import time
+from threading import Thread
 
 app = Flask(__name__)
 ask = Ask(app, '/')
@@ -26,7 +27,7 @@ def api_entry(word):
     print(word)
     print("irsend SEND_ONCE tv KEY_POWER")
     subprocess.call(['irsend', 'SEND_ONCE', 'tv', 'KEY_POWER'])
-    time.sleep(5)
+    time.sleep(8)
     return question("Your tv is turning {}, What would you like to watch?".format(str(word)))
 
 
@@ -50,11 +51,15 @@ def control_roku(app):
     # call function which takes input of sequence
     roku_sequence(app)
 
-    if app.lower() == 'cnbc':
+    def cnbc_sub():
         time.sleep(7)
         subprocess.call(['irsend', 'SEND_ONCE', 'roku', 'KEY_BACK'])
         time.sleep(3)
         subprocess.call(['irsend', 'SEND_ONCE', 'roku', 'KEY_ENTER'])
+
+    if app.lower() == 'cnbc':
+        proc = Thread(target=cnbc_sub)
+        proc.start()
 
     return statement("Opening" + app)
 
