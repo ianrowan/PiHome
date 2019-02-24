@@ -18,19 +18,16 @@ def roku_sequence(app):
     for i in sequences[app.lower()]:
         print("irsend SEND_ONCE roku KEY_{}".format(i.upper()))
         subprocess.call(['irsend', 'SEND_ONCE', 'roku', 'KEY_{}'.format(i.upper())])
-        time.sleep(0.3)
+        time.sleep(0.4)
     subprocess.call(['irsend', 'SEND_ONCE', 'roku', 'KEY_ENTER'])
 
 @ask.intent('TvControl')
-def api_entry(val):
-    print(val)
+def api_entry(word):
+    print(word)
     print("irsend SEND_ONCE tv KEY_POWER")
     subprocess.call(['irsend', 'SEND_ONCE', 'tv', 'KEY_POWER'])
-    if str(val) == "on":
-        time.sleep(28)
-        return question("Your tv is turning {}, What would you like to watch?".format(str(val)))
-    else:
-        return statement("Your tv is turning Off")
+    time.sleep(5)
+    return question("Your tv is turning {}, What would you like to watch?".format(str(word)))
 
 
 @ask.intent('VolumeControl')
@@ -45,6 +42,7 @@ def control_volume(direction, delta):
 
 @ask.intent('Roku')
 def control_roku(app):
+    print(app)
     # first, go to home
     print("irsend SEND_ONCE roku KEY_HOME")
     subprocess.call(['irsend', 'SEND_ONCE', 'roku', 'KEY_HOME'])
@@ -52,13 +50,13 @@ def control_roku(app):
     # call function which takes input of sequence
     roku_sequence(app)
 
-    yield statement("Opening" + app)
-
     if app.lower() == 'cnbc':
-        time.sleep(5)
+        time.sleep(7)
         subprocess.call(['irsend', 'SEND_ONCE', 'roku', 'KEY_BACK'])
-        time.sleep(2)
+        time.sleep(3)
         subprocess.call(['irsend', 'SEND_ONCE', 'roku', 'KEY_ENTER'])
+
+    return statement("Opening" + app)
 
 @ask.intent('FireplaceOn')
 def control_fire():
@@ -66,7 +64,7 @@ def control_fire():
     for i in range(4):
         print("irsend SEND_ONCE fire KEY_POWER")
         subprocess.call(['irsend', 'SEND_ONCE', 'fire', 'KEY_POWER'])
-        time.sleep(.85)
+        time.sleep(1)
     return statement("Enjoy the fire!")
 
 @ask.intent('FireplaceOff')
