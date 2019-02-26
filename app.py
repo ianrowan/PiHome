@@ -13,7 +13,7 @@ def roku_sequence(app):
                  'netflix': ['right'],
                  'amazon prime': ['right', 'right'],
                  'curiosity stream': ['right', 'right', 'right'],
-                 'h.b.o': ['right', 'right', 'down'],
+                 'hbo': ['right', 'right', 'down'],
                  'showtime': ['right', 'down']
                  }
     for i in sequences[app.lower()]:
@@ -27,9 +27,12 @@ def api_entry(word):
     print(word)
     print("irsend SEND_ONCE tv KEY_POWER")
     subprocess.call(['irsend', 'SEND_ONCE', 'tv', 'KEY_POWER'])
-    time.sleep(8)
-    return question("Your tv is turning {}, What would you like to watch?".format(str(word)))
-
+    
+    if word.lower() == 'on':
+        time.sleep(9)
+        return question("Your tv is turning {}, What would you like to watch?".format(str(word))).reprompt("Waiting to load")
+    else:
+        return statement("Your tv is turning off")
 
 @ask.intent('VolumeControl')
 def control_volume(direction, delta):
@@ -37,7 +40,7 @@ def control_volume(direction, delta):
     for i in range(int(delta)):
         print("irsend SEND_ONCE tv KEY_VOLUME{}".format(direction.upper()))
         subprocess.call(['irsend', 'SEND_ONCE', 'tv', 'KEY_VOLUME{}'.format(direction.upper())])
-        time.sleep(0.75)
+        time.sleep(0.4)
     return statement("Volume has been turned {} {}".format(direction, delta))
 
 
@@ -66,10 +69,10 @@ def control_roku(app):
 @ask.intent('FireplaceOn')
 def control_fire():
 
-    for i in range(4):
+    for i in range(2):
         print("irsend SEND_ONCE fire KEY_POWER")
         subprocess.call(['irsend', 'SEND_ONCE', 'fire', 'KEY_POWER'])
-        time.sleep(1)
+        time.sleep(.7)
     return statement("Enjoy the fire!")
 
 @ask.intent('FireplaceOff')
