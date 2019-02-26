@@ -30,7 +30,7 @@ def api_entry(word):
     
     if word.lower() == 'on':
         time.sleep(9)
-        return question("Your tv is turning {}, What would you like to watch?".format(str(word))).reprompt("Waiting to load")
+        return question("Your tv is turning {}, What would you like to watch?".format(str(word)))
     else:
         return statement("Your tv is turning off")
 
@@ -80,6 +80,12 @@ def control_fire_off():
     print("irsend SEND_ONCE fire KEY_POWER")
     subprocess.call(['irsend', 'SEND_ONCE', 'fire', 'KEY_POWER'])
     return statement("The fire has been put out")
+
+@ask.intent('MuteTv')
+def mute_tv():
+    subprocess.call(['irsend', 'SEND_ONCE', 'tv', 'KEY_MUTE'])
+    return statement("Shh")
+
 
 
 if __name__ == "__main__":
