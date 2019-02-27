@@ -27,14 +27,14 @@
                     "name": "TvControl",
                     "slots": [
                         {
-                            "name": "io",
+                            "name": "word",
                             "type": "onOff"
                         }
                     ],
                     "samples": [
-                        "turn the t.v. {io}",
-                        "TV {io}",
-                        "Turn {io} the t.v"
+                        "turn the tv {word}",
+                        "tv {word}",
+                        "turn {word} the tv"
                     ]
                 },
                 {
@@ -69,13 +69,45 @@
                     ]
                 },
                 {
-                    "name": "Fireplace",
+                    "name": "FireplaceOn",
                     "slots": [],
                     "samples": [
                         "start the fireplace",
                         "turn on the fireplace",
                         "turn on the fire",
                         "Start a fire"
+                    ]
+                },
+                {
+                    "name": "FireplaceOff",
+                    "slots": [],
+                    "samples": [
+                        "fire off",
+                        "turn off the fireplace",
+                        "Put out the fire"
+                    ]
+                },
+                {
+                    "name": "MuteTv",
+                    "slots": [],
+                    "samples": [
+                        "mute",
+                        "mute the tv"
+                    ]
+                },
+                {
+                    "name": "ExitPlay",
+                    "slots": [
+                        {
+                            "name": "app",
+                            "type": "Roku"
+                        }
+                    ],
+                    "samples": [
+                        "close and open {app}",
+                        "exit and open {app}",
+                        "close and play {app}",
+                        "exit and play {app}"
                     ]
                 }
             ],
@@ -85,12 +117,12 @@
                     "values": [
                         {
                             "name": {
-                                "value": "Off"
+                                "value": "off"
                             }
                         },
                         {
                             "name": {
-                                "value": "On"
+                                "value": "on"
                             }
                         }
                     ]
@@ -98,6 +130,16 @@
                 {
                     "name": "Roku",
                     "values": [
+                        {
+                            "name": {
+                                "value": "curiosity stream"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "h.b.o"
+                            }
+                        },
                         {
                             "name": {
                                 "value": "c.n.b.c"

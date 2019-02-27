@@ -86,7 +86,7 @@ def roku_exit(app):
     if app.lower() == 'cnbc':
         proc = Thread(target=cnbc_sub)
         proc.start()
-        
+
     return statement("Opening" + app)
 
 
