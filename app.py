@@ -30,7 +30,7 @@ def api_entry(word):
     
     if word.lower() == 'on':
         time.sleep(9)
-        return question("Your tv is turning {}, What would you like to watch?".format(str(word)))
+        return statement("Your tv is turning {}, just let me know what would you like to watch!".format(str(word)))
     else:
         return statement("Your tv is turning off")
 
@@ -68,11 +68,11 @@ def control_roku(app):
 
 @ask.intent('FireplaceOn')
 def control_fire():
-
-    for i in range(2):
-        print("irsend SEND_ONCE fire KEY_POWER")
-        subprocess.call(['irsend', 'SEND_ONCE', 'fire', 'KEY_POWER'])
-        time.sleep(.7)
+    calls = ['up', 'down','left','right']
+    for i in calls:
+        print("irsend SEND_ONCE fire KEY_{}".format(i.upper()))
+        subprocess.call(['irsend', 'SEND_ONCE', 'fire', 'KEY_{}'.format(i.upper())])
+        
     return statement("Enjoy the fire!")
 
 @ask.intent('FireplaceOff')
@@ -84,7 +84,7 @@ def control_fire_off():
 @ask.intent('MuteTv')
 def mute_tv():
     subprocess.call(['irsend', 'SEND_ONCE', 'tv', 'KEY_MUTE'])
-    return statement("Shh")
+    return statement("")
 
 
 
