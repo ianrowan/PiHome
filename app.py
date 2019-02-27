@@ -66,6 +66,31 @@ def control_roku(app):
 
     return statement("Opening" + app)
 
+@ask.intent('ExitPlay')
+def roku_exit(app):
+    print("irsend SEND_ONCE roku KEY_HOME")
+    subprocess.call(['irsend', 'SEND_ONCE', 'roku', 'KEY_HOME'])
+    time.sleep(.5)
+    subprocess.call(['irsend', 'SEND_ONCE', 'roku', 'KEY_DOWN'])
+    time.sleep(.2)
+    subprocess.call(['irsend', 'SEND_ONCE', 'roku', 'KEY_UP'])
+
+    roku_sequence(app)
+
+    def cnbc_sub():
+        time.sleep(7)
+        subprocess.call(['irsend', 'SEND_ONCE', 'roku', 'KEY_BACK'])
+        time.sleep(3)
+        subprocess.call(['irsend', 'SEND_ONCE', 'roku', 'KEY_ENTER'])
+
+    if app.lower() == 'cnbc':
+        proc = Thread(target=cnbc_sub)
+        proc.start()
+        
+    return statement("Opening" + app)
+
+
+
 @ask.intent('FireplaceOn')
 def control_fire():
     calls = ['up', 'down','left','right']
