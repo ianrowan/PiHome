@@ -3,6 +3,7 @@ from flask_ask import Ask, statement, question
 import subprocess
 import time
 from threading import Thread
+from core import get_web_data
 
 app = Flask(__name__)
 ask = Ask(app, '/')
@@ -29,7 +30,7 @@ def api_entry(word):
     subprocess.call(['irsend', 'SEND_ONCE', 'tv', 'KEY_POWER'])
     
     if word.lower() == 'on':
-        time.sleep(9)
+        time.sleep(5)
         return statement("Your tv is turning {}, just let me know what you would like to watch!".format(str(word)))
     else:
         return statement("Your tv is turning off")
@@ -40,7 +41,7 @@ def control_volume(direction, delta):
     for i in range(int(delta)):
         print("irsend SEND_ONCE tv KEY_VOLUME{}".format(direction.upper()))
         subprocess.call(['irsend', 'SEND_ONCE', 'tv', 'KEY_VOLUME{}'.format(direction.upper())])
-        time.sleep(0.4)
+        time.sleep(0.3)
     return statement("Volume has been turned {} {}".format(direction, delta))
 
 
@@ -70,7 +71,7 @@ def control_roku(app):
 def roku_exit(app):
     print("irsend SEND_ONCE roku KEY_HOME")
     subprocess.call(['irsend', 'SEND_ONCE', 'roku', 'KEY_HOME'])
-    time.sleep(3)
+    time.sleep(5)
     subprocess.call(['irsend', 'SEND_ONCE', 'roku', 'KEY_DOWN'])
     time.sleep(.4)
     subprocess.call(['irsend', 'SEND_ONCE', 'roku', 'KEY_UP'])
@@ -109,7 +110,10 @@ def mute_tv():
     subprocess.call(['irsend', 'SEND_ONCE', 'tv', 'KEY_MUTE'])
     return statement("")
 
-
+@ask.intent('WebStats')
+def website_stats():
+    data = get_web_data()
+    return statement("Mindbuilder AI has {} views today, and {} views in total".format(data[1], data[0]))
 
 if __name__ == "__main__":
     app.run()
